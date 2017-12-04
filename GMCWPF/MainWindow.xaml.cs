@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,11 @@ namespace GMCWPF
 		public MainWindow ()
 		{
 			InitializeComponent();
+		}
+
+		private void CompleteBtn_Click (object sender, RoutedEventArgs e)
+		{
+			Debug.WriteLine("クリック！");
 		}
 	}
 }
