@@ -5,7 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GMCWPF"
         mc:Ignorable="d"
-        Title="工数コメントをいい感じに整形するやつ" Height="400" Width="660" Background="AliceBlue" MaxWidth="660">
+        Title="工数コメントをいい感じに整形するやつ" Height="400" Width="660"
+        Background="AliceBlue" MaxWidth="660">
+
+    <Window.Resources>
+ 
+    </Window.Resources>
+
     <Grid Margin="10,10,10,10">
         <Grid.RowDefinitions>
             <RowDefinition Height="1"/>
@@ -16,17 +22,11 @@
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
-        
+
         <Button Content="完了" Grid.Column="1" HorizontalAlignment="Right" Margin="0,10,10,0" Grid.Row="2" Width="75" Click="CompleteBtn_Click"/>
 
         <TreeView Name="treeView" Background="Black" Margin="0,0,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
-            
-            
+            <!--<local:DockPanelMain/>-->
         </TreeView>
-
-
-
     </Grid>
-    
-    
 </Window>
