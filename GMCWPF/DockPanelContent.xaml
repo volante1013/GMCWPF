@@ -6,9 +6,9 @@
              xmlns:local="clr-namespace:GMCWPF"
              mc:Ignorable="d">
 
-    <DockPanel LastChildFill="True" Margin="0,0,0,5" Width="585">
+    <DockPanel LastChildFill="True" Margin="0,0,0,5" Width="561">
         <TextBlock TextWrapping="Wrap" Text="[内容]：" Foreground="White" VerticalAlignment="Center"/>
-        <Button x:Name="PlusBtn_Content" Content="+" Width="25" Margin="10,0,10,0" DockPanel.Dock="Right"/>
+        <Button x:Name="PlusBtn_Content" Content="+" Width="25" Margin="0,0,1,0" DockPanel.Dock="Right"/>
         <Button x:Name="MinusBtn_Content" Content="-" Width="25" Margin="10,0,1,0" DockPanel.Dock="Right"/>
         <TextBox x:Name="ContentBox" TextWrapping="Wrap" Margin="10,0,20,0" DockPanel.Dock="Left"/>
     </DockPanel>
