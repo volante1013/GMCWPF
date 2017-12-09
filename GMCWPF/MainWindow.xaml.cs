@@ -108,6 +108,12 @@ namespace GMCWPF
 			addManhoursMain(mh);
 		}
 
+		private void TreeViewItem_Selected(object sender, RoutedEventArgs e)
+		{
+			var treeViewItem = sender as TreeViewItem;
+			treeViewItem.IsSelected = false;
+		}
+
 		#endregion
 
 		private void setTextToClipBoard ()
@@ -155,6 +161,7 @@ namespace GMCWPF
 			var treeViewItem = new TreeViewItem();
 			treeViewItem.IsExpanded = true;
 			treeViewItem.Header = dpMain as UIElement;
+			treeViewItem.Selected += TreeViewItem_Selected;
 			treeView.Items.Add(treeViewItem);
 
 			manhours.Contents.ForEach(content => addManhoursContent(manhours, treeViewItem));
@@ -166,6 +173,7 @@ namespace GMCWPF
 
 			var treeViewItem = new TreeViewItem();
 			treeViewItem.Header = dpContent;
+			treeViewItem.Selected += TreeViewItem_Selected;
 			parentTreeViewItem.Items.Add(treeViewItem);
 			var index = parentTreeViewItem.Items.IndexOf(treeViewItem);
 
