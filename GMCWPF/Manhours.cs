@@ -59,11 +59,12 @@ namespace GMCWPF
 			Contents = new List<string>();
 		}
 
-		public Manhours(string name, int percent)
+		public Manhours(string name, int percent, string content)
 		{
 			_Name = name;
 			_Percent = percent;
 			Contents = new List<string>();
+			Contents.Add(content);
 		}
 	}
 }
