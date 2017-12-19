@@ -27,5 +27,10 @@ namespace GMCWPF
 			var binding = new Binding(nameof(manhours.Name)) { Source = manhours };
 			NameBox.SetBinding(TextBox.TextProperty, binding);
 		}
+
+		private void TextBox_GotFocus (object sender, System.Windows.RoutedEventArgs e)
+		{
+			Dispatcher.InvokeAsync(() => ( sender as TextBox ).SelectAll());
+		}
 	}
 }

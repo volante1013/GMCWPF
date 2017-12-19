@@ -31,6 +31,11 @@ namespace GMCWPF
 		}
 
 		#region イベント
+		private void OnMouseLeftButtonDown (object sender, System.Windows.Input.MouseButtonEventArgs e)
+		{
+			this.DragMove();
+		}
+
 		private void CompleteBtn_Click (object sender, RoutedEventArgs e)
 		{
 			setTextToClipBoard();
@@ -48,10 +53,10 @@ namespace GMCWPF
 			}
 			else if (button.Name.Contains("Content"))
 			{
-				var parent = ( ( ( button.Parent as DockPanel ).Parent as DockPanelContent ).Parent as TreeViewItem ).Parent as TreeViewItem;
-				var index = treeView.Items.IndexOf(parent);
+				var stackPanel = ( ( button.Parent as DockPanel ).Parent as DockPanelContent ).Parent as StackPanel;
+				var index = RootStackPanel.Children.IndexOf(stackPanel);
 				manhoursList[index].Contents.Add(initContent);
-				addManhoursContent(manhoursList[index], parent);
+				addManhoursContent(manhoursList[index], stackPanel);
 			}
 		}
 
@@ -60,27 +65,26 @@ namespace GMCWPF
 			var button = sender as Button;
 			if (button.Name.Contains("Main"))
 			{
-				if (treeView.Items.Count <= 1)
+				if(RootStackPanel.Children.Count <= 1)
 				{
 					return;
 				}
 
-				var parent = ( ( button.Parent as DockPanel ).Parent as DockPanelMain ).Parent as TreeViewItem;
-				manhoursList.RemoveAt(treeView.Items.IndexOf(parent));
-				treeView.Items.Remove(parent);
+				var stackPanel = ( ( button.Parent as DockPanel ).Parent as DockPanelMain ).Parent as StackPanel;
+				manhoursList.RemoveAt(RootStackPanel.Children.IndexOf(stackPanel));
+				RootStackPanel.Children.Remove(stackPanel);
 			}
 			else if (button.Name.Contains("Content"))
 			{
-				var item = ( ( button.Parent as DockPanel ).Parent as DockPanelContent ).Parent as TreeViewItem;
-				var parent = item.Parent as TreeViewItem;
-				if (parent.Items.Count <= 1)
+				var dockPanel = ( button.Parent as DockPanel ).Parent as DockPanelContent;
+				var stackPanel = dockPanel.Parent as StackPanel;
+				if(stackPanel.Children.Count <= 2)
 				{
 					return;
 				}
-
-				var index = treeView.Items.IndexOf(parent);
-				manhoursList[index].Contents.RemoveAt(parent.Items.IndexOf(item));
-				parent.Items.Remove(item);
+				var index = RootStackPanel.Children.IndexOf(stackPanel);
+				manhoursList[index].Contents.RemoveAt(stackPanel.Children.IndexOf(dockPanel) - 1);
+				stackPanel.Children.Remove(dockPanel);
 			}
 		}
 
@@ -158,28 +162,23 @@ namespace GMCWPF
 			dpMain.setBindPerBox(manhours);
 			dpMain.setBindNameBox(manhours);
 
-			var treeViewItem = new TreeViewItem();
-			treeViewItem.IsExpanded = true;
-			treeViewItem.Header = dpMain as UIElement;
-			treeViewItem.Selected += TreeViewItem_Selected;
-			treeView.Items.Add(treeViewItem);
+			var stackPanel = new StackPanel();
+			RootStackPanel.Children.Add(stackPanel);
+			stackPanel.Children.Add(dpMain);
 
-			manhours.Contents.ForEach(content => addManhoursContent(manhours, treeViewItem));
+			manhours.Contents.ForEach(content => addManhoursContent(manhours, stackPanel));
 		}
 
-		private void addManhoursContent (Manhours manhours, TreeViewItem parentTreeViewItem)
+		private void addManhoursContent (Manhours manhours, StackPanel stackPanel)
 		{
 			var dpContent = new DockPanelContent();
-
-			var treeViewItem = new TreeViewItem();
-			treeViewItem.Header = dpContent;
-			treeViewItem.Selected += TreeViewItem_Selected;
-			parentTreeViewItem.Items.Add(treeViewItem);
-			var index = parentTreeViewItem.Items.IndexOf(treeViewItem);
+			stackPanel.Children.Add(dpContent);
+			var index = stackPanel.Children.IndexOf(dpContent);
 
 			dpContent.GetPlusBtn.Click += PlusBtn_Click;
 			dpContent.GetMinusBtn.Click += MinusBtn_Click;
-			dpContent.setBindContentBox(manhours, index);
+			dpContent.setBindContentBox(manhours, index-1);
 		}
+
 	}
 }

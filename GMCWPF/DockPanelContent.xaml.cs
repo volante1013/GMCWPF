@@ -21,5 +21,10 @@ namespace GMCWPF
 			var binding = new Binding(string.Format($"[{index}]")) { Source = manhours };
 			ContentBox.SetBinding(TextBox.TextProperty, binding);
 		}
+
+		private void ContentBox_GotFocus (object sender, System.Windows.RoutedEventArgs e)
+		{
+			Dispatcher.InvokeAsync(() => ContentBox.SelectAll());
+		}
 	}
 }

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GMCWPF"
         mc:Ignorable="d"
         Title="工数コメントをいい感じに整形するやつ" Height="400" Width="660"
-        Background="AliceBlue" MaxWidth="660">
+        Background="AliceBlue" MouseLeftButtonDown="OnMouseLeftButtonDown">
 
     <Window.Resources>
  
@@ -25,7 +25,11 @@
 
         <Button Content="完了" Grid.Column="1" HorizontalAlignment="Right" Margin="0,10,10,0" Grid.Row="2" Width="75" Click="CompleteBtn_Click"/>
 
-        <TreeView Name="treeView" Background="Black" Margin="0,0,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
-        </TreeView>
-    </Grid>
+		
+		<ScrollViewer Grid.ColumnSpan="2" Grid.Row="1" Grid.Column="0">
+			<StackPanel x:Name="RootStackPanel" Background="Black" Margin="5,5,5,5" MouseLeftButtonDown="OnMouseLeftButtonDown">
+			</StackPanel>
+		</ScrollViewer>
+		
+	</Grid>
 </Window>
