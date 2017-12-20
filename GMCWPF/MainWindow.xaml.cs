@@ -87,6 +87,35 @@ namespace GMCWPF
 				stackPanel.Children.Remove(dockPanel);
 			}
 		}
+
+		private void UpDownBtn_Click (object sender, RoutedEventArgs e)
+		{
+			int UpOrDownIndex = 1;
+
+			var button = sender as Button;
+			var dp = button.Parent as DockPanel;
+			var dpContent = dp.Parent as DockPanelContent;
+			var stackPanel = dpContent.Parent as StackPanel;
+			var index = stackPanel.Children.IndexOf(dpContent);
+			if (button.Name.Contains("Up"))
+			{
+				if (index <= 1)
+					return;
+
+				UpOrDownIndex *= -1;
+			}
+			else if (button.Name.Contains("Down"))
+			{
+				if (index >= stackPanel.Children.Count - 1)
+					return;
+			}
+			
+			var mh = manhoursList[RootStackPanel.Children.IndexOf(stackPanel)];
+			index -= 1;
+			var tmp = mh[index];
+			mh[index] = mh[index + UpOrDownIndex];
+			mh[index + UpOrDownIndex] = tmp;
+		}
 		#endregion
 
 		private void setManhoursList ()
@@ -150,7 +179,7 @@ namespace GMCWPF
 		private void addManhoursMain(Manhours manhours)
 		{
 			var dpMain = new DockPanelMain(manhours);
-			dpMain.PlusBtn_Main.Click += PlusBtn_Click;
+			dpMain.PlusBtn_Main.Click  += PlusBtn_Click;
 			dpMain.MinusBtn_Main.Click += MinusBtn_Click;
 
 			var stackPanel = new StackPanel();
@@ -166,9 +195,16 @@ namespace GMCWPF
 			stackPanel.Children.Add(dpContent);
 			var index = stackPanel.Children.IndexOf(dpContent);
 
-			dpContent.PlusBtn_Content.Click += PlusBtn_Click;
+			dpContent.PlusBtn_Content.Click  += PlusBtn_Click;
 			dpContent.MinusBtn_Content.Click += MinusBtn_Click;
-			dpContent.ContentBox.SetBinding(TextBox.TextProperty, new Binding($"[{index - 1}]") { Source = manhours });
+			dpContent.UpBtn_Content.Click	 += UpDownBtn_Click;
+			dpContent.DownBtn_Content.Click  += UpDownBtn_Click;
+			dpContent.ContentBox.SetBinding(TextBox.TextProperty, 
+				new Binding($"[{index - 1}]")
+				{
+					Source = manhours,
+					UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+				});
 		}
 
 	}
