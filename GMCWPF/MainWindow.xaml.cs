@@ -3,6 +3,7 @@ using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Xml.Serialization;
 
 namespace GMCWPF
@@ -86,6 +87,7 @@ namespace GMCWPF
 				stackPanel.Children.Remove(dockPanel);
 			}
 		}
+		#endregion
 
 		private void setManhoursList ()
 		{
@@ -96,8 +98,8 @@ namespace GMCWPF
 
 			if (File.Exists(filePath))
 			{
-				var doDeserialize = MessageBox.Show("前回の工数コメントを復元しますか", "Select", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes;
-				if (doDeserialize)
+				var doDeserialize = MessageBox.Show("前回の工数コメントを復元しますか", "Select", MessageBoxButton.YesNo, MessageBoxImage.Question);
+				if (doDeserialize == MessageBoxResult.Yes)
 				{
 					deserializeManhoursList();
 					return;
@@ -111,14 +113,6 @@ namespace GMCWPF
 			addManhoursMain(mh);
 		}
 
-		private void TreeViewItem_Selected(object sender, RoutedEventArgs e)
-		{
-			var treeViewItem = sender as TreeViewItem;
-			treeViewItem.IsSelected = false;
-		}
-
-		#endregion
-
 		private void setTextToClipBoard ()
 		{
 			manhoursList.ForEach((mh) =>
@@ -129,7 +123,7 @@ namespace GMCWPF
 
 			System.Windows.Forms.Clipboard.SetText(builder.ToString());
 			MessageBox.Show("以下の内容をクリップボードに貼り付けました\n" + builder.ToString(),
-				"Result", MessageBoxButton.OK, MessageBoxImage.Information);
+							"Result", MessageBoxButton.OK, MessageBoxImage.Information);
 
 			builder.Clear();
 		}
@@ -158,8 +152,6 @@ namespace GMCWPF
 			var dpMain = new DockPanelMain(manhours);
 			dpMain.PlusBtn_Main.Click += PlusBtn_Click;
 			dpMain.MinusBtn_Main.Click += MinusBtn_Click;
-			//dpMain.setBindPerBox(manhours);
-			//dpMain.setBindNameBox(manhours);
 
 			var stackPanel = new StackPanel();
 			RootStackPanel.Children.Add(stackPanel);
@@ -176,7 +168,7 @@ namespace GMCWPF
 
 			dpContent.PlusBtn_Content.Click += PlusBtn_Click;
 			dpContent.MinusBtn_Content.Click += MinusBtn_Click;
-			dpContent.setBindContentBox(manhours, index-1);
+			dpContent.ContentBox.SetBinding(TextBox.TextProperty, new Binding($"[{index - 1}]") { Source = manhours });
 		}
 
 	}
