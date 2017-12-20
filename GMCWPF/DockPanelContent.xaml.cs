@@ -13,9 +13,6 @@ namespace GMCWPF
 			InitializeComponent();
 		}
 
-		public Button GetPlusBtn { get{ return PlusBtn_Content; } }
-		public Button GetMinusBtn { get { return MinusBtn_Content; } }
-
 		public void setBindContentBox (Manhours manhours, int index)
 		{
 			var binding = new Binding(string.Format($"[{index}]")) { Source = manhours };

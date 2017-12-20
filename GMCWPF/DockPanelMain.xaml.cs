@@ -8,13 +8,12 @@ namespace GMCWPF
 	/// </summary>
 	public partial class DockPanelMain : UserControl
 	{
-		public DockPanelMain ()
+		public DockPanelMain (Manhours manhours)
 		{
 			InitializeComponent();
-		}
 
-		public Button GetPlusBtn { get { return PlusBtn_Main; } }
-		public Button GetMinusBtn { get { return MinusBtn_Main; } }
+			this.DataContext = manhours;
+		}
 
 		public void setBindPerBox (Manhours manhours)
 		{

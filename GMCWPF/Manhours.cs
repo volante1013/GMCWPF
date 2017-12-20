@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Data;
 
 namespace GMCWPF
 {
@@ -25,21 +26,14 @@ namespace GMCWPF
 
 		public string this[int index]
 		{
-			get
-			{
-				return Contents[index];
-			}
+			get { return Contents[index]; }
 			set
 			{
-				if(Contents.Count > index)
-				{
-					Contents[index] = value;
-				}
-				else
-				{
-					Contents.Add(value);
-				}
-				NotifyPropertyChanged();
+				if (Contents.Count <= index || Contents[index] == value)
+					return;
+
+				Contents[index] = value;
+				NotifyPropertyChanged(Binding.IndexerName);
 			}
 		}
 

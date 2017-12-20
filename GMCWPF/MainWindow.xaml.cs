@@ -26,7 +26,6 @@ namespace GMCWPF
 		public MainWindow ()
 		{
 			InitializeComponent();
-
 			setManhoursList();
 		}
 
@@ -156,11 +155,11 @@ namespace GMCWPF
 
 		private void addManhoursMain(Manhours manhours)
 		{
-			var dpMain = new DockPanelMain();
-			dpMain.GetPlusBtn.Click += PlusBtn_Click;
-			dpMain.GetMinusBtn.Click += MinusBtn_Click;
-			dpMain.setBindPerBox(manhours);
-			dpMain.setBindNameBox(manhours);
+			var dpMain = new DockPanelMain(manhours);
+			dpMain.PlusBtn_Main.Click += PlusBtn_Click;
+			dpMain.MinusBtn_Main.Click += MinusBtn_Click;
+			//dpMain.setBindPerBox(manhours);
+			//dpMain.setBindNameBox(manhours);
 
 			var stackPanel = new StackPanel();
 			RootStackPanel.Children.Add(stackPanel);
@@ -175,8 +174,8 @@ namespace GMCWPF
 			stackPanel.Children.Add(dpContent);
 			var index = stackPanel.Children.IndexOf(dpContent);
 
-			dpContent.GetPlusBtn.Click += PlusBtn_Click;
-			dpContent.GetMinusBtn.Click += MinusBtn_Click;
+			dpContent.PlusBtn_Content.Click += PlusBtn_Click;
+			dpContent.MinusBtn_Content.Click += MinusBtn_Click;
 			dpContent.setBindContentBox(manhours, index-1);
 		}
 

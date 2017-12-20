@@ -11,8 +11,8 @@
         <Button x:Name="PlusBtn_Main" Content="+" Width="25" Margin="0,0,1,0" DockPanel.Dock="Right" IsTabStop="False"/>
         <Button x:Name="MinusBtn_Main" Content="-" Width="25" Margin="10,0,1,0" DockPanel.Dock="Right" IsTabStop="False"/>
         <TextBlock Text="%" Foreground="White" VerticalAlignment="Center" DockPanel.Dock="Right"/>
-        <TextBox x:Name="PercentBox" Width="30" TextAlignment="Center" DockPanel.Dock="Right" TabIndex="2" GotFocus="TextBox_GotFocus"/>
-        <TextBox x:Name="NameBox" Margin="10,0,20,0" DockPanel.Dock="Left" TabIndex="1" GotFocus="TextBox_GotFocus"/>
+        <TextBox x:Name="PercentBox" Width="30" TextAlignment="Center" DockPanel.Dock="Right" TabIndex="2" GotFocus="TextBox_GotFocus" Text="{Binding Percent}"/>
+        <TextBox x:Name="NameBox" Margin="10,0,20,0" DockPanel.Dock="Left" TabIndex="1" GotFocus="TextBox_GotFocus" Text="{Binding Name}"/>
     </DockPanel>
 
 </UserControl>
