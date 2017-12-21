@@ -71,6 +71,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="BindableBase.cs" />
     <Compile Include="DockPanelContent.xaml.cs">
       <DependentUpon>DockPanelContent.xaml</DependentUpon>
     </Compile>

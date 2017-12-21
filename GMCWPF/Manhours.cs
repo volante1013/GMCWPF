@@ -1,24 +1,22 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows.Data;
 
 namespace GMCWPF
 {
-	public class Manhours : INotifyPropertyChanged
+	public class Manhours : BindableBase
 	{
 		private string _Name;
 		public string Name
 		{
 			get { return _Name; }
-			set { _Name = value; NotifyPropertyChanged(); }
+			set { SetProperty(ref _Name, value); }
 		}
 
 		private int _Percent;
 		public int Percent
 		{
 			get { return _Percent; }
-			set { _Percent = value; NotifyPropertyChanged(); }
+			set { SetProperty(ref _Percent, value); }
 		}
 
 		public bool IsChangedPercent { get; set; } = false;
@@ -39,11 +37,6 @@ namespace GMCWPF
 				NotifyPropertyChanged(Binding.IndexerName);
 			}
 		}
-
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		public void NotifyPropertyChanged ([CallerMemberName]string propertyName = "")
-			=> this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
 		public Manhours ()
 		{
