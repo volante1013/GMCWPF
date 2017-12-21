@@ -287,3 +287,5 @@ __pycache__/
 *.odx.cs
 *.xsd.cs
 /GMCWPF/Serialize/Manhours.xml
+/GMCWPF/工数.png
+/工数.ico
