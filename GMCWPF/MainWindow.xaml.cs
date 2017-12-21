@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -116,6 +117,26 @@ namespace GMCWPF
 			mh[index] = mh[index + UpOrDownIndex];
 			mh[index + UpOrDownIndex] = tmp;
 		}
+
+		private void PercentBox_LostFocus (object sender, RoutedEventArgs e)
+		{
+			var stackPanel = ( ( ( sender as TextBox ).Parent as DockPanel ).Parent as DockPanelMain ).Parent as StackPanel;
+			var mh = manhoursList[RootStackPanel.Children.IndexOf(stackPanel)];
+			mh.IsChangedPercent = true;
+			if (manhoursList.All(man => man.IsChangedPercent))
+			{
+				manhoursList.ForEach(man => man.IsChangedPercent = false);
+				mh.IsChangedPercent = true;
+			}
+
+			var NotChangedMh = manhoursList.Where(man => !man.IsChangedPercent);
+			if(NotChangedMh.Count() != 1)
+			{
+				return;
+			}
+
+			NotChangedMh.Single().Percent = 100 - manhoursList.Where(man => man.IsChangedPercent).Select(man => man.Percent).Sum();
+		}
 		#endregion
 
 		private void setManhoursList ()
@@ -181,6 +202,7 @@ namespace GMCWPF
 			var dpMain = new DockPanelMain(manhours);
 			dpMain.PlusBtn_Main.Click  += PlusBtn_Click;
 			dpMain.MinusBtn_Main.Click += MinusBtn_Click;
+			dpMain.PercentBox.LostFocus += PercentBox_LostFocus;
 
 			var stackPanel = new StackPanel();
 			RootStackPanel.Children.Add(stackPanel);
@@ -206,6 +228,5 @@ namespace GMCWPF
 					UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
 				});
 		}
-
 	}
 }

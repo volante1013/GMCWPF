@@ -15,12 +15,13 @@ namespace GMCWPF
 		}
 
 		private int _Percent;
-
 		public int Percent
 		{
 			get { return _Percent; }
 			set { _Percent = value; NotifyPropertyChanged(); }
 		}
+
+		public bool IsChangedPercent { get; set; } = false;
 
 		public List<string> Contents { get; }
 
@@ -30,7 +31,9 @@ namespace GMCWPF
 			set
 			{
 				if (Contents.Count <= index || Contents[index] == value)
+				{
 					return;
+				}
 
 				Contents[index] = value;
 				NotifyPropertyChanged(Binding.IndexerName);
