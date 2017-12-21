@@ -49,8 +49,7 @@ namespace GMCWPF
 		{
 			_Name = name;
 			_Percent = percent;
-			Contents = new List<string>();
-			Contents.Add(content);
+			Contents = new List<string> { content };
 		}
 	}
 }
