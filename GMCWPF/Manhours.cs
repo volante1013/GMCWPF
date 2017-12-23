@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Windows.Controls;
 using System.Windows.Data;
 
 namespace GMCWPF
@@ -50,6 +53,27 @@ namespace GMCWPF
 			_Name = name;
 			_Percent = percent;
 			Contents = new List<string> { content };
+		}
+	}
+
+	public class PercentValidationRule : ValidationRule
+	{
+		public override ValidationResult Validate (object value, CultureInfo cultureInfo)
+		{
+			string perStr = value.ToString();
+			if(perStr.Any(c => !char.IsNumber(c)))
+			{
+				return new ValidationResult(false, "数字以外は入力しないでください");
+			}
+			else if (int.Parse(perStr) > 100 || int.Parse(perStr) < 0)
+			{
+				return new ValidationResult(false, "パーセントは0以上100以下を入力してください");
+			}
+			else
+			{
+
+				return new ValidationResult(true, null);
+			}
 		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -89,21 +90,23 @@ namespace GMCWPF
 			int UpOrDownIndex = 1;
 
 			var button = sender as Button;
-			var dp = button.Parent as DockPanel;
-			var dpContent = dp.Parent as DockPanelContent;
+			var dpContent = ( button.Parent as DockPanel ).Parent as DockPanelContent;
 			var stackPanel = dpContent.Parent as StackPanel;
 			var index = stackPanel.Children.IndexOf(dpContent);
 			if (button.Name.Contains("Up"))
 			{
 				if (index <= 1)
+				{
 					return;
-
+				}
 				UpOrDownIndex *= -1;
 			}
 			else if (button.Name.Contains("Down"))
 			{
 				if (index >= stackPanel.Children.Count - 1)
+				{
 					return;
+				}
 			}
 
 			var mh = manhoursList[RootStackPanel.Children.IndexOf(stackPanel)];
@@ -130,7 +133,8 @@ namespace GMCWPF
 				return;
 			}
 
-			NotChangedMh.Single().Percent = 100 - manhoursList.Where(man => man.IsChangedPercent).Select(man => man.Percent).Sum();
+			int tmpPercent = 100 - manhoursList.Where(man => man.IsChangedPercent).Select(man => man.Percent).Sum();
+			NotChangedMh.Single().Percent = ( tmpPercent < 0 ) ? 0 : tmpPercent;
 		}
 		#endregion
 
@@ -166,8 +170,9 @@ namespace GMCWPF
 				mh.Contents.ForEach((content) => builder.AppendLine(" - " + content));
 			});
 
-			System.Windows.Forms.Clipboard.SetText(builder.ToString());
-			MessageBox.Show("以下の内容をクリップボードに貼り付けました\n" + builder.ToString(),
+			string str = builder.ToString();
+			System.Windows.Forms.Clipboard.SetText(str);
+			MessageBox.Show("以下の内容をクリップボードに貼り付けました\n" + str,
 							"Result", MessageBoxButton.OK, MessageBoxImage.Information);
 
 			builder.Clear();
@@ -223,6 +228,5 @@ namespace GMCWPF
 					UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
 				});
 		}
-
 	}
 }

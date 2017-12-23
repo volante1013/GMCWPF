@@ -6,13 +6,32 @@
              xmlns:local="clr-namespace:GMCWPF"
              mc:Ignorable="d">
 
+	<UserControl.Resources>
+		<Style x:Key="TextBoxHasError" TargetType="{x:Type TextBox}">
+			<Style.Triggers>
+				<Trigger Property="Validation.HasError" Value="true">
+					<Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+				</Trigger>
+			</Style.Triggers>
+		</Style>
+	</UserControl.Resources>
+
     <DockPanel LastChildFill="True" Margin="0,10,0,5" KeyboardNavigation.TabNavigation="Local">
         <TextBlock Text="工数名：" Foreground="White" VerticalAlignment="Center"/>
         <Button x:Name="PlusBtn_Main" Content="+" Width="25" Margin="0,0,1,0" DockPanel.Dock="Right" IsTabStop="False"/>
         <Button x:Name="MinusBtn_Main" Content="-" Width="25" Margin="10,0,1,0" DockPanel.Dock="Right" IsTabStop="False"/>
         <TextBlock Text="%" Foreground="White" VerticalAlignment="Center" DockPanel.Dock="Right"/>
-        <TextBox x:Name="PercentBox" Width="30" TextAlignment="Center" DockPanel.Dock="Right" TabIndex="2" GotFocus="TextBox_GotFocus" Text="{Binding Percent, UpdateSourceTrigger=PropertyChanged}"/>
-        <TextBox x:Name="NameBox" Margin="10,0,20,0" DockPanel.Dock="Left" TabIndex="1" GotFocus="TextBox_GotFocus" Text="{Binding Name}"/>
+		<TextBox x:Name="PercentBox" Width="30" TextAlignment="Center" DockPanel.Dock="Right" TabIndex="2" GotFocus="TextBox_GotFocus" Style="{StaticResource TextBoxHasError}">
+			<TextBox.Text>
+				<Binding Path="Percent" UpdateSourceTrigger="LostFocus">
+					<Binding.ValidationRules>
+						<local:PercentValidationRule/>
+					</Binding.ValidationRules>
+				</Binding>
+			</TextBox.Text>
+		</TextBox>
+
+		<TextBox x:Name="NameBox" Margin="10,0,20,0" DockPanel.Dock="Left" TabIndex="1" GotFocus="TextBox_GotFocus" Text="{Binding Name}"/>
     </DockPanel>
 
 </UserControl>
