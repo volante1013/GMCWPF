@@ -23,7 +23,7 @@
         <TextBlock Text="%" Foreground="White" VerticalAlignment="Center" DockPanel.Dock="Right"/>
 		<TextBox x:Name="PercentBox" Width="30" TextAlignment="Center" DockPanel.Dock="Right" TabIndex="2" GotFocus="TextBox_GotFocus" Style="{StaticResource TextBoxHasError}">
 			<TextBox.Text>
-				<Binding Path="Percent" UpdateSourceTrigger="LostFocus">
+				<Binding Path="Percent" UpdateSourceTrigger="LostFocus" NotifyOnValidationError="True">
 					<Binding.ValidationRules>
 						<local:PercentValidationRule/>
 					</Binding.ValidationRules>

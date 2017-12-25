@@ -71,7 +71,6 @@ namespace GMCWPF
 			}
 			else
 			{
-
 				return new ValidationResult(true, null);
 			}
 		}

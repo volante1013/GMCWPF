@@ -16,7 +16,7 @@ namespace GMCWPF
 			this.MouseLeftButtonDown += (sender, e) => this.DragMove();
 			RootStackPanel.MouseLeftButtonDown += (sender, e) => this.DragMove();
 
-			manhoursViewModel = new ManhoursViewModel(RootStackPanel);
+			manhoursViewModel = new ManhoursViewModel(RootStackPanel, CompleteBtn);
 		}
 
 		private void CompleteBtn_Click (object sender, RoutedEventArgs e)

@@ -24,10 +24,13 @@ namespace GMCWPF
 		private const string initContent = "ここに工数の内容を入力";
 
 		private StackPanel RootStackPanel;
+		private Button CompleteBtn;
+		private int numOfErrors;
 
-		public ManhoursViewModel (StackPanel stackPanel)
+		public ManhoursViewModel (StackPanel stackPanel, Button btn)
 		{
 			RootStackPanel = stackPanel;
+			CompleteBtn = btn;
 
 			SetManhoursList();
 		}
@@ -134,7 +137,21 @@ namespace GMCWPF
 			}
 
 			int tmpPercent = 100 - manhoursList.Where(man => man.IsChangedPercent).Select(man => man.Percent).Sum();
-			NotChangedMh.Single().Percent = ( tmpPercent < 0 ) ? 0 : tmpPercent;
+			NotChangedMh.Single().Percent = Math.Min(Math.Max(tmpPercent, 0), 100);
+		}
+
+		private void PercentBox_Error(object sender, ValidationErrorEventArgs e)
+		{
+			if(e.Action == ValidationErrorEventAction.Added)
+			{
+				numOfErrors++;
+			}
+			else
+			{
+				numOfErrors--;
+			}
+
+			CompleteBtn.IsEnabled = !( numOfErrors > 0 );
 		}
 		#endregion
 
@@ -203,6 +220,7 @@ namespace GMCWPF
 			dpMain.PlusBtn_Main.Click += PlusBtn_Click;
 			dpMain.MinusBtn_Main.Click += MinusBtn_Click;
 			dpMain.PercentBox.LostFocus += PercentBox_LostFocus;
+			dpMain.PercentBox.AddHandler(Validation.ErrorEvent, new EventHandler<ValidationErrorEventArgs>(PercentBox_Error));
 
 			var stackPanel = new StackPanel();
 			RootStackPanel.Children.Add(stackPanel);
