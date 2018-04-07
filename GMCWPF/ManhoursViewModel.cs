@@ -82,9 +82,22 @@ namespace GMCWPF
 				{
 					return;
 				}
-				var index = RootStackPanel.Children.IndexOf(stackPanel);
-				manhoursList[index].Contents.RemoveAt(stackPanel.Children.IndexOf(dockPanel) - 1);
-				stackPanel.Children.Remove(dockPanel);
+
+				// DockPanelContentの末尾のUIを削除
+				stackPanel.Children.RemoveAt(stackPanel.Children.Count - 1);
+
+				// マイナスボタンが押されたmanhoursのクラスを取得
+				var mhContents = manhoursList[RootStackPanel.Children.IndexOf(stackPanel)];
+
+				// マイナスボタンが押された要素のList上でのIndexを取得
+				var rmContentIndex = stackPanel.Children.IndexOf(dockPanel) - 1;
+				for (int i = rmContentIndex; i < mhContents.Contents.Count - 1; i++)
+				{
+					// List内の要素を一個ずつ上にずらす
+					mhContents[i] = mhContents[i + 1];
+				}
+				//　最後の要素を削除
+				mhContents.Contents.RemoveAt(mhContents.Contents.Count - 1);
 			}
 		}
 

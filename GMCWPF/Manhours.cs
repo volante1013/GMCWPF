@@ -28,7 +28,14 @@ namespace GMCWPF
 
 		public string this[int index]
 		{
-			get { return Contents[index]; }
+			get
+			{
+				if(Contents.Count <= index)
+				{
+					return string.Empty;
+				}
+				return Contents[index];
+			}
 			set
 			{
 				if (Contents.Count <= index || Contents[index] == value)
