@@ -83,9 +83,6 @@ namespace GMCWPF
 					return;
 				}
 
-				// DockPanelContentの末尾のUIを削除
-				stackPanel.Children.RemoveAt(stackPanel.Children.Count - 1);
-
 				// マイナスボタンが押されたmanhoursのクラスを取得
 				var mhContents = manhoursList[RootStackPanel.Children.IndexOf(stackPanel)];
 
@@ -98,6 +95,9 @@ namespace GMCWPF
 				}
 				//　最後の要素を削除
 				mhContents.Contents.RemoveAt(mhContents.Contents.Count - 1);
+
+				// DockPanelContentの末尾のUIを削除
+				stackPanel.Children.RemoveAt(stackPanel.Children.Count - 1);
 			}
 		}
 
